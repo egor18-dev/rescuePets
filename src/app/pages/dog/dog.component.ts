@@ -14,10 +14,8 @@ export class DogComponent {
   constructor (private _resuceService : RescueService) {}
 
   ngOnInit(): void {
-    this._resuceService.getData("assets/data/pets_data.json").then((data : any  ) => {
-      this.pets = data.pets;
-    }).catch(() => {
-      alert('Error al JSON');
+    this._resuceService.retrieveAnimals().then((pets : PetModel []) => {
+      this.pets = pets;
     });
   }
 

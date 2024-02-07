@@ -1,4 +1,5 @@
 export interface PetModel {
+  id ?: string;
   name: string;
   type: string;
   main_image: string;
