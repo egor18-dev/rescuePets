@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { PetModel } from '../models/pet.model';
 import { Firestore, collectionData, Query, query, where, CollectionReference, collection } from '@angular/fire/firestore';
+import { limit } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +39,21 @@ export class RescueService {
         }
       });
     }); 
+  }
+
+  retrieveAnimalById (refAnimal : string) {
+    const queryRef = query(this._petsCollection, where('__name__', '==', refAnimal), limit(1));
+
+    return new Promise<PetModel>((resolve, reject) => {
+      collectionData(queryRef, { idField: 'id' }).subscribe({
+        next: (products: PetModel []) => {
+          resolve(products[0]);
+        },
+        error: (err) => {
+          reject(err);
+        }
+      });
+    });
   }
 
 }

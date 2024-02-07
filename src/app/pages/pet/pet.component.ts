@@ -19,14 +19,8 @@ export class PetComponent implements OnInit{
       this._activatedRoute.params.subscribe((data) => {
         const id = data['id'];
 
-        this._rescueService.getData("assets/data/pets_data.json").then((data) => {
-          this.pet = data.pets[id];
-
-          if(this.pet){
-            console.log(this.pet);
-          }
-        }).catch(() => {
-          alert('Error');
+        this._rescueService.retrieveAnimalById(id).then((pet : PetModel) => {
+          this.pet = pet;
         });
       });    
     }
