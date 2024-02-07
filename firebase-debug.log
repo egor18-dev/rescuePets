@@ -1,0 +1,11 @@
+[debug] [2024-02-07T17:21:42.620Z] ----------------------------------------------------------------------
+[debug] [2024-02-07T17:21:42.623Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\egor\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js login:ci --no-localhost
+[debug] [2024-02-07T17:21:42.623Z] CLI Version:   12.9.1
+[debug] [2024-02-07T17:21:42.623Z] Platform:      win32
+[debug] [2024-02-07T17:21:42.623Z] Node Version:  v20.9.0
+[debug] [2024-02-07T17:21:42.623Z] Time:          Wed Feb 07 2024 18:21:42 GMT+0100 (Hora estàndard del Centre d’Europa)
+[debug] [2024-02-07T17:21:42.623Z] ----------------------------------------------------------------------
+[debug] 
+[warn] !  Authenticating with a `login:ci` token is deprecated and will be removed in a future major version of `firebase-tools`. Instead, use a service account key with `GOOGLE_APPLICATION_CREDENTIALS`: https://cloud.google.com/docs/authentication/getting-started 
+[debug] [2024-02-07T17:21:42.679Z] >>> [apiv2][query] POST https://auth.firebase.tools/attest [none]
+[debug] [2024-02-07T17:21:42.679Z] >>> [apiv2][body] POST https://auth.firebase.tools/attest {"session_id":"617f2f21-66d1-4922-afa3-8b3650ed67bb"}

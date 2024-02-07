@@ -1,0 +1,10 @@
+<div class="container-fluid" style="min-height: 85vh;">
+    <div class="row p-3">
+        <ng-container *ngFor="let pet of pets; index as i">
+            <div class="col-md-4" *ngIf="pet.type == 'dog'" routerLink="/animal/{{i}}">
+                <img src="assets/img/{{pet.main_image}}" class="w-100 rounded" alt="img{{pet.name}}" height="150" style="object-fit: cover;">
+                <h5 class="text-center mt-2">{{pet.name}}</h5>
+            </div>
+        </ng-container>
+    </div>
+</div>
