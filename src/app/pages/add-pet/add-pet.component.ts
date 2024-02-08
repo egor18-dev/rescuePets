@@ -28,6 +28,7 @@ export class AddPetComponent implements OnInit{
   ngOnInit(): void {
     this._activatedRoute.params.subscribe((data) => {
       const id = data['id'];
+      this.id = id;
       this.modify = true;
 
       this._rescueService.retrieveAnimalById(id).then((pet : PetModel) => {
@@ -97,18 +98,27 @@ export class AddPetComponent implements OnInit{
   }
 
   addPet (data : any) {
-    let petModel: PetModel = data;
+    if(!this.modify){
+      let petModel: PetModel = data;
 
-    data.carousel_imgs = data.carousel_imgs.split("|egor_espai|");
-    data.carousel_imgs.splice(0, 1);
-
-    data.vaccines = data.vaccines.split(",");
-    data.observations = data.observations.split(",");
-    data.diseases = data.diseases.split(",");
-
-    this._rescueService.addAnimal(petModel).then(() => {
-      this._router.navigate([`/${data.type}s`]);
-    });
+      data.carousel_imgs = data.carousel_imgs.split("|egor_espai|");
+      data.carousel_imgs.splice(0, 1);
+  
+      data.vaccines = data.vaccines.split(",");
+      data.observations = data.observations.split(",");
+      data.diseases = data.diseases.split(",");
+  
+      this._rescueService.addAnimal(petModel).then(() => {
+        this._router.navigate([`/${data.type}s`]);
+      });
+    }else{
+      if(this.pet){
+        this._rescueService.mofifyById(this.id, data).then(() => {
+          this._router.navigate([`/${data.type}s`]);
+        });
+      }
+    }
+   
   }
 
 }
