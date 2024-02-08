@@ -113,6 +113,12 @@ export class AddPetComponent implements OnInit{
       });
     }else{
       if(this.pet){
+        if(data.main_image === "") data.main_image = this.pet.main_image;
+        if(data.carousel_imgs === "") data.carousel_imgs = this.pet.carousel_imgs;
+        else{
+          data.carousel_imgs = data.carousel_imgs.split("|egor_espai|");
+          data.carousel_imgs.splice(0, 1);
+        }
         this._rescueService.mofifyById(this.id, data).then(() => {
           this._router.navigate([`/${data.type}s`]);
         });
