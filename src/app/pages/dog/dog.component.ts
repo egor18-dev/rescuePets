@@ -14,8 +14,18 @@ export class DogComponent {
   constructor (private _resuceService : RescueService) {}
 
   ngOnInit(): void {
+      this.loadPets();
+  }
+
+  loadPets () {
     this._resuceService.retrieveAnimals().then((pets : PetModel []) => {
       this.pets = pets;
+    });
+  }
+
+  delete (index : number , id : string) {
+    this._resuceService.delteById(id).then(() => {
+      this.pets.splice(index, 1);
     });
   }
 

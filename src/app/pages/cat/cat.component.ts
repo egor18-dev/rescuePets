@@ -19,4 +19,10 @@ export class CatComponent implements OnInit {
     });
   }
 
+  delete (index : number, id : string) {
+    this._resuceService.delteById(id).then(() => {
+      this.pets.splice(index, 1);
+    });
+  }
+
 }

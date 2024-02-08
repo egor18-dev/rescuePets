@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { PetModel } from '../models/pet.model';
-import { Firestore, collectionData, Query, query, where, CollectionReference, collection } from '@angular/fire/firestore';
-import { addDoc, limit } from 'firebase/firestore';
+import { Firestore, collectionData, Query, query, where, CollectionReference, collection, doc, deleteDoc } from '@angular/fire/firestore';
+import { addDoc, DocumentReference, limit } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -58,6 +58,11 @@ export class RescueService {
         }
       });
     });
+  }
+
+  delteById (id : string) {
+    const documentRef : DocumentReference<PetModel> = doc(this._firestore, 'pets', id) as DocumentReference<PetModel>;
+    return deleteDoc(documentRef);
   }
 
 }

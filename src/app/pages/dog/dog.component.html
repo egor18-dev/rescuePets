@@ -1,9 +1,10 @@
 <div class="container-fluid" style="min-height: 85vh;">
     <div class="row p-3">
         <ng-container *ngFor="let pet of pets; index as i">
-            <div class="col-md-4 d-flex flex-column align-items-center justify-content-center" *ngIf="pet.type == 'dog'" routerLink="/animal/{{pet.id}}">
-                <img src="{{pet.main_image}}" class="img-fluid w-50 rounded" alt="img{{pet.name}}" height="150" style="object-fit: cover;">
+            <div class="col-md-4 d-flex flex-column align-items-center justify-content-center" *ngIf="pet.type == 'dog'">
+                <img src="{{pet.main_image}}" class="img-fluid w-50 rounded" alt="img{{pet.name}}" routerLink="/animal/{{pet.id}}" height="150" style="object-fit: cover;">
                 <h5 class="text-center mt-2">{{pet.name}}</h5>
+                <button class="btn btn-outline-danger" (click)="delete(i, pet.id!)">Eliminar</button>
             </div>
         </ng-container>
     </div>
