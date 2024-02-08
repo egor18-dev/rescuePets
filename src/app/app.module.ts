@@ -18,6 +18,7 @@ import { environment } from 'src/environments/environment';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { AddPetComponent } from './pages/add-pet/add-pet.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {path : 'home',  component: HomeComponent},
@@ -44,6 +45,7 @@ const routes: Routes = [
     BrowserModule,
     RouterModule.forRoot(routes),
     HttpClientModule,
+    ReactiveFormsModule,
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
