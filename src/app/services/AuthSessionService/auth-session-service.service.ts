@@ -45,8 +45,9 @@ export class AuthSessionService {
   }
 
   logout() {
-    this._auth.signOut();
-    this._router.navigate(['/signIn']);
+    this._auth.signOut().then(() => {
+      this._router.navigate(['/signIn']);
+    });
   }
 
   async createAccount (email : string, password : string) {
