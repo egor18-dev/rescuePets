@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
 import { AuthSessionService } from 'src/app/services/AuthSessionService/auth-session-service.service';
 
 @Component({
@@ -10,9 +12,20 @@ export class HeaderComponent implements OnInit{
 
   public isUserLogged : boolean = false;
 
-  constructor (private _authSessionService : AuthSessionService) {}
+  constructor (private _authSessionService : AuthSessionService,
+    private _router : Router) {
+    this._router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event : any) => {
+      this.checkSession();
+    });
+  }
 
   ngOnInit(): void {
+    this.checkSession();
+  }
+
+  checkSession () {
     this._authSessionService.userLogged().then((uid : any) => {
       this.isUserLogged = uid ? true : false;
     }).catch(() => this.isUserLogged = false);
