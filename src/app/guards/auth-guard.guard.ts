@@ -18,10 +18,10 @@ export class AuthGuard {
       const userLogged : any = await this._authService.userLogged();
 
       if(userLogged){
-        return true;
-      }else{
-        this._router.navigate(['/signIn']);
+        this._router.navigate(['/home']);
         return false;
+      }else{
+        return true;
       }
   }
 

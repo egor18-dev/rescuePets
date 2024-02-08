@@ -30,8 +30,8 @@ const routes: Routes = [
   {path: 'animal/:id', component: PetComponent},
   {path: 'addPet', component: AddPetComponent},
   {path: 'modifyPet/:id', component: AddPetComponent},
-  {path: 'signUp', component: RegisterComponent},
-  {path: 'signIn', component: LoginComponent},
+  {path: 'signUp', component: RegisterComponent, canActivate: [AuthGuard]},
+  {path: 'signIn', component: LoginComponent, canActivate: [AuthGuard]},
   {path : '', redirectTo: 'home', pathMatch: 'full'},
   {path: '**', component: HomeComponent}
 ]
