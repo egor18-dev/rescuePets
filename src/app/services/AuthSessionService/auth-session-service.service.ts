@@ -28,12 +28,25 @@ export class AuthSessionService {
         this._router.navigate(['/home']);
       }else{
         alert('Email o contrasenya incorrectes');
-        this._router.navigate(['/sign-in']);
+        this._router.navigate(['/signIn']);
       }
     }catch(err) {
       alert('Email o contrasenya incorrectes');
-      this._router.navigate(['/sign-in']);
+      this._router.navigate(['/signIn']);
     }
+  }
+
+  userLogged() {
+    return new Promise((resolve, reject) => {
+      this._auth.onAuthStateChanged((user) => {
+        resolve(user?.uid);
+      });
+    });
+  }
+
+  logout() {
+    this._auth.signOut();
+    this._router.navigate(['/signIn']);
   }
 
   async createAccount (email : string, password : string) {

@@ -21,6 +21,7 @@ import { AddPetComponent } from './pages/add-pet/add-pet.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
+import { AuthGuard } from './guards/auth-guard.guard';
 
 const routes: Routes = [
   {path : 'home',  component: HomeComponent},
