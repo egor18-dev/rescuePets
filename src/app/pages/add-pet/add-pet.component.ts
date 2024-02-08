@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PetModel } from 'src/app/models/pet.model';
 import { RescueService } from 'src/app/services/rescue.service';
 
@@ -15,11 +15,33 @@ export class AddPetComponent implements OnInit{
 
   base64Strings : any [] = [];
 
+  public id !: string;
+  public pet !: PetModel;
+
   constructor (private _formBuilder : FormBuilder,
     private _rescueService : RescueService,
-    private _router : Router ) {}
+    private _router : Router,
+    private _activatedRoute : ActivatedRoute) {}
 
   ngOnInit(): void {
+    this._activatedRoute.params.subscribe((data) => {
+      const id = data['id'];
+
+      this._rescueService.retrieveAnimalById(id).then((pet : PetModel) => {
+        this.pet = pet;
+      
+        this.formGroup.controls['name'].setValue(this.pet ? this.pet.name : "");
+        this.formGroup.controls['type'].setValue(this.pet ? this.pet.type : "");
+        this.formGroup.controls['biography'].setValue(this.pet ? this.pet.biography : "");
+        this.formGroup.controls['sex'].setValue(this.pet ? this.pet.sex : "");
+        this.formGroup.controls['birthdate'].setValue(this.pet ? this.pet.birthdate : "");
+        this.formGroup.controls['chip'].setValue(this.pet ? this.pet.chip : "");
+        this.formGroup.controls['vaccines'].setValue(this.pet ? this.pet.vaccines : "");
+        this.formGroup.controls['diseases'].setValue(this.pet ? this.pet.diseases : "");
+        this.formGroup.controls['observations'].setValue(this.pet ? this.pet.observations : "");
+      });
+    });
+
     this.formGroup = this._formBuilder.group({
       name : new FormControl('', Validators.required),
       type : new FormControl('', Validators.required),
@@ -34,6 +56,8 @@ export class AddPetComponent implements OnInit{
       diseases: new FormControl(''),
       observations: new FormControl('')
     });
+
+
   }
 
   readMainFile(event : any) {
