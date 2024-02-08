@@ -18,6 +18,8 @@ export class AddPetComponent implements OnInit{
   public id !: string;
   public pet !: PetModel;
 
+  public modify : boolean = false;
+
   constructor (private _formBuilder : FormBuilder,
     private _rescueService : RescueService,
     private _router : Router,
@@ -26,6 +28,7 @@ export class AddPetComponent implements OnInit{
   ngOnInit(): void {
     this._activatedRoute.params.subscribe((data) => {
       const id = data['id'];
+      this.modify = true;
 
       this._rescueService.retrieveAnimalById(id).then((pet : PetModel) => {
         this.pet = pet;
