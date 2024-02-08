@@ -5,7 +5,7 @@
                 <img src="{{pet.main_image}}" routerLink="/animal/{{pet.id}}" class="w-100" alt="img{{pet.name}}" height="150" style="object-fit: cover;">
                 <h5 class="text-center mt-2">{{pet.name}}</h5>
                 <button class="btn btn-outline-danger" (click)="delete(i, pet.id!)">Eliminar</button>
-                <button class="btn btn-outline-primary" class="mt-2" routerLink="/modifyPet/{{pet.id}}">Editar</button>
+                <button class="btn btn-outline-primary mt-2" routerLink="/modifyPet/{{pet.id}}">Editar</button>
             </div>
         </ng-container>
     </div>

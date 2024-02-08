@@ -19,6 +19,8 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { AddPetComponent } from './pages/add-pet/add-pet.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RegisterComponent } from './pages/register/register.component';
+import { LoginComponent } from './pages/login/login.component';
 
 const routes: Routes = [
   {path : 'home',  component: HomeComponent},
@@ -27,6 +29,7 @@ const routes: Routes = [
   {path: 'animal/:id', component: PetComponent},
   {path: 'addPet', component: AddPetComponent},
   {path: 'modifyPet/:id', component: AddPetComponent},
+  {path: 'signUp', component: RegisterComponent},
   {path : '', redirectTo: 'home', pathMatch: 'full'},
   {path: '**', component: HomeComponent}
 ]
@@ -41,6 +44,9 @@ const routes: Routes = [
     DogComponent,
     PetComponent,
     AddPetComponent,
+    RegisterComponent,
+    RegisterComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
