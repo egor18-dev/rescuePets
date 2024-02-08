@@ -64,7 +64,7 @@
       </p>
       <h2>Dades</h2>
       <ul>
-        <li>Sexe: {{ pet.type }}</li>
+        <li>Sexe: {{ pet.type == "dog" ? "gos" : "gat" }}</li>
         <li>Data naixament : {{ pet.birthdate }}</li>
         <li>Xip : {{ pet.chip == "yes" ? "si" : "no" }}</li>
         <li>Vacunes : {{ pet.vaccines }}</li>
