@@ -37,12 +37,13 @@ export class AddPetComponent implements OnInit{
   }
 
   readMainFile(event : any) {
-    const files = event.target.files;
-    const file = files[0];
+    const file = event.target.files[0];
     this.imgToBase64(file, true);
   }
 
   readCarouselFiles(event : any) {
+    this.formGroup.controls['carousel_imgs'].setValue("");
+
     const files = event.target.files;
 
     for(let i = 0; i < files.length; i++){
@@ -51,16 +52,21 @@ export class AddPetComponent implements OnInit{
   }
 
   imgToBase64(file : File, isMain : boolean) {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      const base64String = reader.result;
-      
-      if(isMain) this.formGroup.controls['main_image'].setValue(base64String);
-      else this.formGroup.controls['carousel_imgs'].setValue(`${this.formGroup.get('carousel_imgs')?.value}|egor_espai|${base64String}`);
-    }
 
-    console.log(this.formGroup);
+    try{
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const base64String = reader.result;
+        console.log(base64String);
+        
+        if(isMain) this.formGroup.controls['main_image'].setValue(base64String);
+        else this.formGroup.controls['carousel_imgs'].setValue(`${this.formGroup.get('carousel_imgs')?.value}|egor_espai|${base64String}`);
+      }
+    }catch(err){
+      alert("Les imatges pesen molt, intenta baixar el pes");
+    }
+    
   }
 
   addPet (data : any) {

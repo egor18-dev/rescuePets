@@ -26,6 +26,7 @@ const routes: Routes = [
   {path : 'dogs', component: DogComponent},
   {path: 'animal/:id', component: PetComponent},
   {path: 'addPet', component: AddPetComponent},
+  {path: 'modifyPet/:id', component: AddPetComponent},
   {path : '', redirectTo: 'home', pathMatch: 'full'},
   {path: '**', component: HomeComponent}
 ]
