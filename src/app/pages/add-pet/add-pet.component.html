@@ -13,11 +13,11 @@
         </div>
         <div class="form-group mb-3">
             <label for="main-file">Foto principal</label>
-            <input type="file" accept="image/*" id="main-file" class="form-control">
+            <input type="file" (change)="readMainFile($event)" accept="image/*" id="main-file" class="form-control">
         </div>
         <div class="form-group mb-3">
             <label for="files">Fotos carousel</label>
-            <input type="file" multiple="multiple" accept="image/*" id="files" class="form-control">
+            <input type="file" (change)="readCarouselFiles($event)"  multiple="multiple" accept="image/*" id="files" class="form-control">
         </div>
         <div class="form-group mb-3">
             <input type="text" formControlName="biography" placeholder="Biografia" class="form-control">

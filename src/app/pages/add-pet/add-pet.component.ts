@@ -10,6 +10,8 @@ export class AddPetComponent implements OnInit{
 
   formGroup !: FormGroup;
 
+  base64Strings : any [] = [];
+
   constructor (private _formBuilder : FormBuilder) {}
 
   ngOnInit(): void {
@@ -27,6 +29,28 @@ export class AddPetComponent implements OnInit{
       diseases: new FormControl(''),
       observations: new FormControl('')
     });
+  }
+
+  readMainFile(event : any) {
+    const files = event.target.files;
+    const file = files[0];
+    this.imgToBase64(file);
+  }
+
+  readCarouselFiles(event : any) {
+    const files = event.target.files;
+
+    for(let i = 0; i < files.length; i++){
+      this.imgToBase64(files[i], true);
+    }
+  }
+
+  imgToBase64(file : File, isMain : boolean = false) {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.base64Strings.push(reader.result);
+    }
   }
 
   addPet (data : any) {
