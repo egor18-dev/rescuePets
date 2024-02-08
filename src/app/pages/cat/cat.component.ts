@@ -14,11 +14,8 @@ export class CatComponent implements OnInit {
   constructor (private _resuceService : RescueService) {}
 
   ngOnInit(): void {
-    this._resuceService.getData("assets/data/pets_data.json").then((data : any  ) => {
-      this.pets = data.pets;
-      console.log(data);
-    }).catch(() => {
-      alert('Error al JSON');
+    this._resuceService.retrieveAnimals().then((animals : PetModel []) => {
+      this.pets = animals.filter((pet : PetModel) => pet.type === "cat");
     });
   }
 
