@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit{
 
   logOut (){
     this._authSessionService.logout();
+    this.isUserLogged = false;
   }
 
 }
