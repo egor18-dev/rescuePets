@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { Firestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { User } from 'firebase/auth';
+import { signInWithEmailAndPassword, User } from 'firebase/auth';
 import { addDoc, collection, CollectionReference, DocumentReference } from 'firebase/firestore';
 import { UserModel } from 'src/app/models/user.model';
 
@@ -18,6 +18,22 @@ export class AuthSessionService {
     private _firestore : Firestore) { 
 
     this._usersCollection = collection(this._firestore, 'users') as CollectionReference<UserModel>;
+  }
+
+  async login(email : string, password : string) {
+    try{
+      const result = await signInWithEmailAndPassword(this._auth, email, password);
+      
+      if(result){
+        this._router.navigate(['/home']);
+      }else{
+        alert('Email o contrasenya incorrectes');
+        this._router.navigate(['/sign-in']);
+      }
+    }catch(err) {
+      alert('Email o contrasenya incorrectes');
+      this._router.navigate(['/sign-in']);
+    }
   }
 
   async createAccount (email : string, password : string) {
