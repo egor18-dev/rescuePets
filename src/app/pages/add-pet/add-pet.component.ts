@@ -29,7 +29,8 @@ export class AddPetComponent implements OnInit{
     this._activatedRoute.params.subscribe((data) => {
       const id = data['id'];
       this.id = id;
-      this.modify = true;
+      if(id)
+        this.modify = true;
 
       this._rescueService.retrieveAnimalById(id).then((pet : PetModel) => {
         this.pet = pet;
