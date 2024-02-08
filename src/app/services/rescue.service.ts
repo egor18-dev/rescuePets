@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { PetModel } from '../models/pet.model';
 import { Firestore, collectionData, Query, query, where, CollectionReference, collection } from '@angular/fire/firestore';
-import { limit } from 'firebase/firestore';
+import { addDoc, limit } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +27,10 @@ export class RescueService {
       })
     }); 
   }  
+
+  addAnimal (pet : PetModel) {
+    return addDoc(this._petsCollection, pet);
+  }
 
   retrieveAnimals () {
     return new Promise<PetModel []>((resolve, reject) => {

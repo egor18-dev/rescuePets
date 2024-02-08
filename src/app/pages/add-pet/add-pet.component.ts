@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { PetModel } from 'src/app/models/pet.model';
+import { RescueService } from 'src/app/services/rescue.service';
 
 @Component({
   selector: 'app-add-pet',
@@ -12,7 +15,9 @@ export class AddPetComponent implements OnInit{
 
   base64Strings : any [] = [];
 
-  constructor (private _formBuilder : FormBuilder) {}
+  constructor (private _formBuilder : FormBuilder,
+    private _rescueService : RescueService,
+    private _router : Router ) {}
 
   ngOnInit(): void {
     this.formGroup = this._formBuilder.group({
@@ -34,27 +39,43 @@ export class AddPetComponent implements OnInit{
   readMainFile(event : any) {
     const files = event.target.files;
     const file = files[0];
-    this.imgToBase64(file);
+    this.imgToBase64(file, true);
   }
 
   readCarouselFiles(event : any) {
     const files = event.target.files;
 
     for(let i = 0; i < files.length; i++){
-      this.imgToBase64(files[i], true);
+      this.imgToBase64(files[i], false);
     }
   }
 
-  imgToBase64(file : File, isMain : boolean = false) {
+  imgToBase64(file : File, isMain : boolean) {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      this.base64Strings.push(reader.result);
+      const base64String = reader.result;
+      
+      if(isMain) this.formGroup.controls['main_image'].setValue(base64String);
+      else this.formGroup.controls['carousel_imgs'].setValue(`${this.formGroup.get('carousel_imgs')?.value}|egor_espai|${base64String}`);
     }
+
+    console.log(this.formGroup);
   }
 
   addPet (data : any) {
-    console.log(data);
+    let petModel: PetModel = data;
+
+    data.carousel_imgs = data.carousel_imgs.split("|egor_espai|");
+    data.carousel_imgs.splice(0, 1);
+
+    data.vaccines = data.vaccines.split(",");
+    data.observations = data.observations.split(",");
+    data.diseases = data.diseases.split(",");
+
+    this._rescueService.addAnimal(petModel).then(() => {
+      this._router.navigate([`/${data.type}s`]);
+    });
   }
 
 }

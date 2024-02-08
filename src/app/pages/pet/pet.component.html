@@ -13,7 +13,7 @@
         >
           <div class="carousel-inner" *ngIf="pet">
             <div class="carousel-item active" *ngFor="let petImg of pet.carousel_imgs">
-              <img src="data:image/png;base64,{{petImg}}" class="d-block w-100" alt="..." height="400" style="object-fit: cover;"/>
+              <img src="{{petImg}}" class="d-block w-100" alt="..." height="400" style="object-fit: cover;"/>
             </div>
           </div>
           <button
