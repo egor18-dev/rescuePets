@@ -17,12 +17,14 @@ import { environment } from 'src/environments/environment';
 
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { AddPetComponent } from './pages/add-pet/add-pet.component';
 
 const routes: Routes = [
   {path : 'home',  component: HomeComponent},
   {path : 'cats',  component: CatComponent},
   {path : 'dogs', component: DogComponent},
   {path: 'animal/:id', component: PetComponent},
+  {path: 'addPet', component: AddPetComponent},
   {path : '', redirectTo: 'home', pathMatch: 'full'},
   {path: '**', component: HomeComponent}
 ]
@@ -36,6 +38,7 @@ const routes: Routes = [
     CatComponent,
     DogComponent,
     PetComponent,
+    AddPetComponent,
   ],
   imports: [
     BrowserModule,
