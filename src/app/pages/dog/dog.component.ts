@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RescueService } from '../../services/rescue.service';
 import { PetModel } from '../../models/pet.model';
 import { Router } from '@angular/router';
+import { AuthSessionService } from 'src/app/services/AuthSessionService/auth-session-service.service';
 
 @Component({
   selector: 'app-dog',
@@ -13,7 +14,8 @@ export class DogComponent {
   public pets !: PetModel [];
 
   constructor (private _resuceService : RescueService,
-    private _router : Router) {}
+    private _router : Router,
+    private _auth : AuthSessionService) {}
 
   ngOnInit(): void {
     this._resuceService.retrieveAnimals().then((pets : PetModel []) => {
@@ -29,6 +31,10 @@ export class DogComponent {
 
   edit(id : string){
     this._router.navigate([`/modifyPet/${id}`]);
+  }
+
+  checkUserIsAdmin (){
+    return this._auth.getCheckUserAdmin();
   }
 
 }
