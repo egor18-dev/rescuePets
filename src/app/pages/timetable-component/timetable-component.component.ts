@@ -25,7 +25,6 @@ export class TimetableComponentComponent {
     private _rescueService : RescueService,
     private _volunteersService : VolunteerService,
     private _auth : AuthSessionService) {
-
     }
     
     ngOnInit(): void {
@@ -59,7 +58,14 @@ export class TimetableComponentComponent {
     }
 
     retrieveByHour (i : number){
-      return this._volunteersService.returnIsVolunteer(this.hours[i]).length > 0;
+      return this._volunteersService.returnIsVolunteer(this.hours[i]);
+    }
+
+    getName(volunteer : any) {
+      if(volunteer.length > 0){
+       
+      }
+      return volunteer.length > 0 ? 'Ocupat' : 'No ocupat'; 
     }
 
 }

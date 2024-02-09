@@ -22,6 +22,21 @@ export class AuthSessionService {
     this.checkUserAdmin();
   }
 
+  getUserByUid(uid : string) : Promise <UserModel> {
+    return new Promise((resolve, reject) => {
+      const queryRef = query(this._usersCollection, where('uid', '==', uid), limit(1));
+
+      collectionData(queryRef, { idField: 'id' }).subscribe({
+        next: (users: UserModel[]) => {
+          resolve(users[0]);
+        },
+        error: (err) => {
+          reject(err);
+        }
+      })
+    });
+  }
+
   async login(email: string, password: string) {
     try {
       const result = await signInWithEmailAndPassword(this._auth, email, password);
