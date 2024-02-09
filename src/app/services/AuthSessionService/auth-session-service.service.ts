@@ -102,7 +102,7 @@ userLogged() {
 
 logout() {
   this._auth.signOut().then(() => {
-    this._router.navigate(['/signIn']);
+    this._router.navigate(['/home']);
   });
 }
 
