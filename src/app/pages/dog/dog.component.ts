@@ -13,11 +13,18 @@ export class DogComponent {
 
   public pets !: PetModel [];
 
+  public isUserLogged : boolean = false;
+
   constructor (private _resuceService : RescueService,
     private _router : Router,
     private _auth : AuthSessionService) {}
 
   ngOnInit(): void {
+    this._auth.userLogged().then((uid : any) => {
+      if(uid) this.isUserLogged = true;
+      else this.isUserLogged = false;
+    }).catch(() => this.isUserLogged = false);
+
     this._resuceService.retrieveAnimals().then((pets : PetModel []) => {
       this.pets = pets;
     });

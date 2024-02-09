@@ -34,6 +34,7 @@ const routes: Routes = [
   {path: 'modifyPet/:id', component: AddPetComponent, canActivate: [AdminGuard]},
   {path: 'signUp', component: RegisterComponent, canActivate: [AuthGuard]},
   {path: 'signIn', component: LoginComponent, canActivate: [AuthGuard]},
+  {path: 'timetable/:id', component: TimetableComponentComponent},
   {path : '', redirectTo: 'home', pathMatch: 'full'},
   {path: '**', component: HomeComponent}
 ]
