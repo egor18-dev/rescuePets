@@ -21,6 +21,8 @@ export class TimetableComponentComponent {
 
   public volunteers !: Volunteer [];
 
+  public add : number = 0;
+
   constructor (private _activatedRoute : ActivatedRoute,
     private _rescueService : RescueService,
     private _volunteersService : VolunteerService,
@@ -41,6 +43,8 @@ export class TimetableComponentComponent {
     volunteerAdd (index : number) {
       const date = new Date();
       date.setHours(this.hours[index], 0, 0);
+      date.setDate(date.getDate() + this.add);
+      console.log(date);
 
       this._auth.userLogged().then((uid : any) => {
 
@@ -66,6 +70,11 @@ export class TimetableComponentComponent {
        
       }
       return volunteer.length > 0 ? 'Ocupat' : 'No ocupat'; 
+    }
+
+   reload(i : number) {
+      this.add = i;
+      this._volunteersService.getVolunteers(this.add)
     }
 
 }

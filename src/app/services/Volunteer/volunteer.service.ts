@@ -16,17 +16,17 @@ export class VolunteerService {
   constructor(private _firestore: Firestore) {
     this._volunteersCollection = collection(this._firestore, 'volunteers') as CollectionReference<Volunteer>;
 
-    this.getVolunteers();
+    this.getVolunteers(1);
   }
 
   addVolunteer(volunteer: Volunteer) {
     return addDoc(this._volunteersCollection, volunteer);
   }
 
-  getVolunteers() {
+  getVolunteers(add : number) {
     const today = new Date();
-    const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-    const endOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59);
+    const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate() + add);
+    const endOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate() + add, 23, 59, 59);
 
     const queryRef = query(
       this._volunteersCollection,
