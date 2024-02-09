@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithPopup } from '@angular/fire/auth';
 import { Firestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { signInWithEmailAndPassword, User } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithEmailAndPassword, User, UserCredential } from 'firebase/auth';
 import { addDoc, collection, CollectionReference, DocumentReference } from 'firebase/firestore';
 import { UserModel } from 'src/app/models/user.model';
 

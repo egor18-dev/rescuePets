@@ -7,16 +7,19 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a class="nav-link" routerLink="home">Inici</a>
+          <a class="nav-link" routerLink="/home">Inici</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="cats">Gats</a>
+          <a class="nav-link" routerLink="/cats">Gats</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="dogs">Gossos</a>
+          <a class="nav-link" routerLink="/dogs">Gossos</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="addPet">Afegir animal</a>
+          <a class="nav-link" routerLink="/addPet">Afegir animal</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/signIn" *ngIf="!isUserLogged">Autenticar</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="dogs" (click)="logOut()" *ngIf="isUserLogged">Tancar sessió</a>
