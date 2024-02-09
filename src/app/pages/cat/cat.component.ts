@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RescueService } from '../../services/rescue.service';
 import { PetModel } from '../../models/pet.model';
 import { AuthSessionService } from 'src/app/services/AuthSessionService/auth-session-service.service';
+import { UserModel } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-cat',
@@ -13,12 +14,19 @@ export class CatComponent implements OnInit {
   public pets !: PetModel [];
 
   public isUserLogged : boolean = false;
+  public isAdmin : boolean = false;
 
   constructor (private _resuceService : RescueService,
     private _auth : AuthSessionService) {
 
       this._auth.userLogged().then((uid : any) => {
-        if(uid) this.isUserLogged = true;
+        if(uid){
+          this.isUserLogged = true;
+  
+          this._auth.getUserByUid(uid).then((userModel : UserModel) => {
+            this.isAdmin = userModel.role === "admin" ? true : false;
+          });
+        } 
         else this.isUserLogged = false;
       }).catch(() => this.isUserLogged = false);
     }
@@ -38,7 +46,6 @@ export class CatComponent implements OnInit {
   }
 
   checkUserIsAdmin (){
-    return this._auth.getCheckUserAdmin();
   }
 
 }

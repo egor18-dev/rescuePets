@@ -12,14 +12,23 @@ import { UserModel } from 'src/app/models/user.model';
 export class AuthSessionService {
 
   private _usersCollection !: CollectionReference<UserModel>;
-  private role : string = 'volunteer';
+  private role !: string;
 
   constructor(private _auth: Auth,
     private _router: Router,
     private _firestore: Firestore) {
 
     this._usersCollection = collection(this._firestore, 'users') as CollectionReference<UserModel>;
-    this.checkUserAdmin();
+
+    this.userLogged().then((uid : any) => {
+
+      if(uid){
+        this.getUserByUid(uid).then((user : UserModel) => {
+          this.role = user.role;
+        });
+      }
+
+    });
   }
 
   getUserByUid(uid : string) : Promise <UserModel> {

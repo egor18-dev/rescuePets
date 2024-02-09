@@ -6,8 +6,8 @@
                 <h5 class="text-center mt-2">{{pet.name}}</h5>
                 <div class="row" *ngIf="isUserLogged">
                     <button class="btn btn-outline-success" routerLink="/timetable/{{pet.id}}">Cuidar</button>
-                    <button class="btn btn-outline-danger my-2" (click)="delete(i, pet.id!)" *ngIf="checkUserIsAdmin()">Eliminar</button>
-                    <button class="btn btn-outline-primary" routerLink="/modifyPet/{{pet.id}}" *ngIf="checkUserIsAdmin()">Editar</button>
+                    <button class="btn btn-outline-danger my-2" (click)="delete(i, pet.id!)" *ngIf="isAdmin">Eliminar</button>
+                    <button class="btn btn-outline-primary" routerLink="/modifyPet/{{pet.id}}" *ngIf="isAdmin">Editar</button>
                 </div>
             </div>
         </ng-container>
