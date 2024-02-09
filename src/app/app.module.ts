@@ -23,6 +23,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './guards/auth-guard.guard';
 import { AdminGuard } from './guards/admin-guard';
+import { TimetableComponentComponent } from './pages/timetable-component/timetable-component.component';
 
 const routes: Routes = [
   {path : 'home',  component: HomeComponent},
@@ -50,6 +51,7 @@ const routes: Routes = [
     RegisterComponent,
     RegisterComponent,
     LoginComponent,
+    TimetableComponentComponent,
   ],
   imports: [
     BrowserModule,

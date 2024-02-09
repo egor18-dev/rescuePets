@@ -4,6 +4,7 @@
             <div class="col-md-4 d-flex flex-column align-items-center justify-content-center" *ngIf="pet.type == 'cat'">
                 <img src="{{pet.main_image}}" routerLink="/animal/{{pet.id}}" class="w-100" alt="img{{pet.name}}" height="150" style="object-fit: cover;">
                 <h5 class="text-center mt-2">{{pet.name}}</h5>
+                <button class="btn btn-outline-success" *ngIf="isUserLogged">Cuidar</button>
                 <button class="btn btn-outline-danger" (click)="delete(i, pet.id!)" *ngIf="checkUserIsAdmin()">Eliminar</button>
                 <button class="btn btn-outline-primary mt-2" routerLink="/modifyPet/{{pet.id}}" *ngIf="checkUserIsAdmin()">Editar</button>
             </div>

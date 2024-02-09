@@ -12,8 +12,16 @@ export class CatComponent implements OnInit {
 
   public pets !: PetModel [];
 
+  public isUserLogged : boolean = false;
+
   constructor (private _resuceService : RescueService,
-    private _auth : AuthSessionService) {}
+    private _auth : AuthSessionService) {
+
+      this._auth.userLogged().then((uid : any) => {
+        if(uid) this.isUserLogged = true;
+        else this.isUserLogged = false;
+      }).catch(() => this.isUserLogged = false);
+    }
 
   ngOnInit(): void {
     this._resuceService.retrieveAnimals().then((animals : PetModel []) => {
