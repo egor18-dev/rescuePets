@@ -23,4 +23,8 @@ export class LoginComponent {
     this._authSessionService.login(data.email, data.password);
   }
 
+  signInGoogle () {
+    this._authSessionService.signInWithGoogle();
+  }
+
 }

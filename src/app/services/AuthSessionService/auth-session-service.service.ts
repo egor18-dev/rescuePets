@@ -37,6 +37,23 @@ export class AuthSessionService {
     });
   }
 
+   
+  signInWithGoogle () {
+    signInWithPopup(this._auth, new GoogleAuthProvider()).then((userCredential : UserCredential) => {
+      this.getUserByUid(this._auth.currentUser?.uid!).then((user : UserModel) => {
+
+        if(!user){
+          this.registerInfo(this._auth.currentUser?.email!);
+            this._router.navigate(['/home']);
+        }else{
+          this._router.navigate(['/home']);
+        }
+
+      });
+    })
+  }
+
+
   async login(email: string, password: string) {
     try {
       const result = await signInWithEmailAndPassword(this._auth, email, password);
@@ -44,11 +61,9 @@ export class AuthSessionService {
       if (result) {
         this._router.navigate(['/home']);
       } else {
-        alert('Email o contrasenya incorrectes');
         this._router.navigate(['/signIn']);
       }
     } catch (err) {
-      alert('Email o contrasenya incorrectes');
       this._router.navigate(['/signIn']);
     }
   }
