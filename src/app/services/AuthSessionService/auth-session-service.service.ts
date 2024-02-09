@@ -43,7 +43,7 @@ export class AuthSessionService {
       this.getUserByUid(this._auth.currentUser?.uid!).then((user : UserModel) => {
 
         if(!user){
-          this.registerInfo(this._auth.currentUser?.email!);
+          this.registerInfo(this._auth.currentUser?.displayName!, 'google no surnames', this._auth.currentUser?.email!);
             this._router.navigate(['/home']);
         }else{
           this._router.navigate(['/home']);
@@ -106,11 +106,11 @@ logout() {
   });
 }
 
-  async createAccount(email : string, password : string) {
+  async createAccount(name : string, surnames : string, email : string, password : string) {
   try {
     const result = await createUserWithEmailAndPassword(this._auth, email, password);
     if (result) {
-      this.registerInfo(email);
+      this.registerInfo(name, surnames, email);
     } else {
       alert("Error al crear el compte intente un altre correu");
     }
@@ -119,11 +119,11 @@ logout() {
   }
 }
 
-registerInfo(email : string) {
+registerInfo(name : string, surnames : string, email : string) {
   const uid = this._auth.currentUser?.uid!;
 
   if (uid) {
-    const user: UserModel = { 'uid': uid, 'email': email, 'role': 'volunteer' }
+    const user: UserModel = { 'uid': uid, 'name': name, 'surnames': surnames, 'email': email, 'role': 'volunteer' }
     addDoc(this._usersCollection, user).then(() => {
       this._router.navigate(['/signIn']);
     }).catch(() => {

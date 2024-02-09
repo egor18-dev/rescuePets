@@ -14,13 +14,15 @@ export class RegisterComponent {
   constructor (private _formBuilder : FormBuilder,
     private _authSessionService : AuthSessionService) {
     this.formGroup = this._formBuilder.group({
+      name : new FormControl("", Validators.required),
+      surnames: new FormControl("", Validators.required),
       email : new FormControl("", [Validators.required, Validators.email]),
       password : new FormControl("", [Validators.required, Validators.minLength(6)])
     });
   }
 
   createAccount (data : any) {
-    this._authSessionService.createAccount(data.email, data.password);
+    this._authSessionService.createAccount(data.name, data.surnames, data.email, data.password);
   } 
 
 }
