@@ -16,7 +16,7 @@
           <a class="nav-link" routerLink="/dogs">Gossos</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/addPet">Afegir animal</a>
+          <a class="nav-link" routerLink="/addPet" *ngIf="checkUserIsAdmin()">Afegir animal</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/signIn" *ngIf="!isUserLogged">Autenticar</a>

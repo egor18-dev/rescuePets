@@ -13,7 +13,8 @@ export class HeaderComponent implements OnInit{
   public isUserLogged : boolean = false;
 
   constructor (private _authSessionService : AuthSessionService,
-    private _router : Router) {
+    private _router : Router,
+    private _auth : AuthSessionService) {
     this._router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event : any) => {
@@ -34,6 +35,10 @@ export class HeaderComponent implements OnInit{
   logOut (){
     this._authSessionService.logout();
     this.isUserLogged = false;
+  }
+
+  checkUserIsAdmin (){
+    return this._auth.getCheckUserAdmin();
   }
 
 }

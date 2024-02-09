@@ -22,14 +22,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './guards/auth-guard.guard';
+import { AdminGuard } from './guards/admin-guard';
 
 const routes: Routes = [
   {path : 'home',  component: HomeComponent},
   {path : 'cats',  component: CatComponent},
   {path : 'dogs', component: DogComponent},
   {path: 'animal/:id', component: PetComponent},
-  {path: 'addPet', component: AddPetComponent},
-  {path: 'modifyPet/:id', component: AddPetComponent},
+  {path: 'addPet', component: AddPetComponent, canActivate: [AdminGuard]},
+  {path: 'modifyPet/:id', component: AddPetComponent, canActivate: [AdminGuard]},
   {path: 'signUp', component: RegisterComponent, canActivate: [AuthGuard]},
   {path: 'signIn', component: LoginComponent, canActivate: [AuthGuard]},
   {path : '', redirectTo: 'home', pathMatch: 'full'},
