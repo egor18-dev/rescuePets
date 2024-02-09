@@ -10,22 +10,11 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit{
 
-  data : any;
 
-  constructor (private _rescueService : RescueService,
-    private _auth : AuthSessionService,
-    private _router : Router) {}
+  constructor () {}
 
   ngOnInit(): void {
-    this._rescueService.getData("/assets/data/general_data.json").then((dataTemp) => {
-      this.data = dataTemp;
-    }).catch((err) => {
-      alert('Error');
-    });
   }
 
-  checkUserIsAdmin (){
-    return this._auth.getCheckUserAdmin();
-  }
 
 }

@@ -10,38 +10,40 @@ import { addDoc, DocumentReference, limit, updateDoc } from 'firebase/firestore'
 })
 export class RescueService {
 
-  private _pets !: PetModel [];
-  private _petsCollection !: CollectionReference <PetModel>;
+  private _pets !: PetModel[];
+  private _petsCollection !: CollectionReference<PetModel>;
+  private _mainCollection !: CollectionReference<any>;
 
-  constructor(private _httpClient : HttpClient,
-    private _firestore : Firestore) {
+  main : any;
+
+  constructor(private _httpClient: HttpClient,
+    private _firestore: Firestore) {
     this._petsCollection = collection(this._firestore, 'pets') as CollectionReference<PetModel>;
+    this._mainCollection = collection(this._firestore, 'main') as CollectionReference<any>;
 
     this.retrieveAnimals();
   }
- 
-  getData (direction : string) : Promise<any> {
-    console.log(direction);
-    return new Promise<any>((resolve, reject) => {
-      this._httpClient.get(direction).subscribe({
-        next: (data : any) => resolve(data),
-        error : (error : any) => reject(error)
-      })
-    }); 
-  }  
 
-  addAnimal (pet : PetModel) {
+  getData() {
+    return collectionData(this._mainCollection, { idField: 'id' });
+  }
+
+  returnMain () {
+    return this.main;
+  }
+
+  addAnimal(pet: PetModel) {
     return addDoc(this._petsCollection, pet);
   }
 
-  getPets () {
+  getPets() {
     return this._pets;
   }
 
-  retrieveAnimals () {
-    return new Promise<PetModel []>((resolve, reject) => {
-      collectionData(this._petsCollection, {'idField': 'id'}).subscribe({
-        next: (categoriesDb : PetModel []) => {
+  retrieveAnimals() {
+    return new Promise<PetModel[]>((resolve, reject) => {
+      collectionData(this._petsCollection, { 'idField': 'id' }).subscribe({
+        next: (categoriesDb: PetModel[]) => {
           resolve(categoriesDb)
           this._pets = categoriesDb;
         },
@@ -49,15 +51,15 @@ export class RescueService {
           reject(err);
         }
       });
-    }); 
+    });
   }
 
-  retrieveAnimalById (refAnimal : string) {
+  retrieveAnimalById(refAnimal: string) {
     const queryRef = query(this._petsCollection, where('__name__', '==', refAnimal), limit(1));
 
     return new Promise<PetModel>((resolve, reject) => {
       collectionData(queryRef, { idField: 'id' }).subscribe({
-        next: (products: PetModel []) => {
+        next: (products: PetModel[]) => {
           resolve(products[0]);
         },
         error: (err) => {
@@ -67,15 +69,15 @@ export class RescueService {
     });
   }
 
-  delteById (id : string) {
-    const documentRef : DocumentReference<PetModel> = doc(this._firestore, 'pets', id) as DocumentReference<PetModel>;
+  delteById(id: string) {
+    const documentRef: DocumentReference<PetModel> = doc(this._firestore, 'pets', id) as DocumentReference<PetModel>;
     return deleteDoc(documentRef);
   }
 
-  mofifyById (id : string, pet : any) {
+  mofifyById(id: string, pet: any) {
     console.log(pet);
 
-    const documentRef : DocumentReference<PetModel> = doc(this._firestore, 'pets', id) as DocumentReference<PetModel>;
+    const documentRef: DocumentReference<PetModel> = doc(this._firestore, 'pets', id) as DocumentReference<PetModel>;
     return updateDoc(documentRef, pet);
   }
 
