@@ -24,9 +24,11 @@ export class CatComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this._resuceService.retrieveAnimals().then((animals : PetModel []) => {
-      this.pets = animals.filter((pet : PetModel) => pet.type === "cat");
-    });
+   
+  }
+
+  getAnimal () {
+    return this._resuceService.getPets();
   }
 
   delete (index : number, id : string) {

@@ -24,16 +24,16 @@ export class DogComponent {
       if(uid) this.isUserLogged = true;
       else this.isUserLogged = false;
     }).catch(() => this.isUserLogged = false);
-
-    this._resuceService.retrieveAnimals().then((pets : PetModel []) => {
-      this.pets = pets;
-    });
   }
 
   delete (index : number , id : string) {
     this._resuceService.delteById(id).then(() => {
       this.pets.splice(index, 1);
     });
+  }
+
+  getPets () {
+    return this._resuceService.getPets();
   }
 
   edit(id : string){

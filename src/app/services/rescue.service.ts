@@ -16,6 +16,8 @@ export class RescueService {
   constructor(private _httpClient : HttpClient,
     private _firestore : Firestore) {
     this._petsCollection = collection(this._firestore, 'pets') as CollectionReference<PetModel>;
+
+    this.retrieveAnimals();
   }
  
   getData (direction : string) : Promise<any> {
@@ -32,11 +34,16 @@ export class RescueService {
     return addDoc(this._petsCollection, pet);
   }
 
+  getPets () {
+    return this._pets;
+  }
+
   retrieveAnimals () {
     return new Promise<PetModel []>((resolve, reject) => {
       collectionData(this._petsCollection, {'idField': 'id'}).subscribe({
         next: (categoriesDb : PetModel []) => {
           resolve(categoriesDb)
+          this._pets = categoriesDb;
         },
         error: (err) => {
           reject(err);
