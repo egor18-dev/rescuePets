@@ -98,7 +98,7 @@ export class AuthSessionService {
   }
 
   getCheckUserAdmin() {
-    return this.role !== "volunteer";
+    return this.role !== "volunteer" && this.role !== "" && this.role;
   }
 
 userLogged() {
