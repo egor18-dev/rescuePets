@@ -39,7 +39,7 @@ export class RescueService {
     this._authService.userLogged().then((uid : any) => {
       
       this._authService.getUserByUid(uid).then((user : UserModel) => {
-        if(user.role === 'admin'){
+        if(user.role === 'admin'){ // Seguritzar
           addDoc(this._petsCollection, pet);
         }
       });
@@ -84,7 +84,7 @@ export class RescueService {
 
       this._authService.getUserByUid(uid).then((user : UserModel) => {
 
-        if(user.role === "admin"){
+        if(user.role === "admin"){ // Seguritzar
           const documentRef: DocumentReference<PetModel> = doc(this._firestore, 'pets', id) as DocumentReference<PetModel>;
           deleteDoc(documentRef);
         }
@@ -101,8 +101,12 @@ export class RescueService {
     this._authService.userLogged().then((uid : any) => {
 
       this._authService.getUserByUid(uid).then((user : UserModel) => {
-        const documentRef: DocumentReference<PetModel> = doc(this._firestore, 'pets', id) as DocumentReference<PetModel>;
-        updateDoc(documentRef, pet);
+
+        if(user.role === "admin"){ // Seguritzar
+          const documentRef: DocumentReference<PetModel> = doc(this._firestore, 'pets', id) as DocumentReference<PetModel>;
+          updateDoc(documentRef, pet);
+        }
+        
       });
 
     });

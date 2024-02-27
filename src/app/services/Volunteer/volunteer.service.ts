@@ -15,10 +15,13 @@ export class VolunteerService {
 
   private volunteers: Volunteer[] = [];
 
+  private _isVolunteer : boolean = false;
+
   constructor(private _firestore: Firestore,
     private _authService : AuthSessionService) {
     this._volunteersCollection = collection(this._firestore, 'volunteers') as CollectionReference<Volunteer>;
 
+    
     this.getVolunteers(0);
   }
 
@@ -28,7 +31,7 @@ export class VolunteerService {
 
       this._authService.getUserByUid(uid).then((user : UserModel) => {
 
-        if(user.role === 'volunteer' || user.role === 'admin'){
+        if(user.role === 'volunteer' || user.role === 'admin'){ // Seguritzar
 
           const volunteer : Volunteer = {
             refPet: id,
@@ -57,7 +60,12 @@ export class VolunteerService {
 
     collectionData(queryRef, { 'idField': 'id' }).subscribe({
       next: (volunteers: Volunteer[]) => {
-        this.volunteers = volunteers;
+        this._authService.userLogged().then((uid : any) => {
+          this._authService.getUserByUid(uid).then((user : UserModel) => {
+            if(user.role === "admin" || user.role === "volunteer") // Seguritzar
+              this.volunteers = volunteers;
+          });
+        });
       },
       error: (err) => {
       }
