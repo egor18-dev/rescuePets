@@ -19,7 +19,7 @@ export class VolunteerService {
     private _authService : AuthSessionService) {
     this._volunteersCollection = collection(this._firestore, 'volunteers') as CollectionReference<Volunteer>;
 
-    this.getVolunteers(1);
+    this.getVolunteers(0);
   }
 
   addVolunteer(id : any, date : any) {
@@ -40,8 +40,6 @@ export class VolunteerService {
         }
 
       });
-
-      
 
     });
   }
