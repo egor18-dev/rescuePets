@@ -108,9 +108,8 @@ export class AddPetComponent implements OnInit{
       data.observations = data.observations.split(",");
       data.diseases = data.diseases.split(",");
   
-      this._rescueService.addAnimal(petModel).then(() => {
-        this._router.navigate([`/${data.type}s`]);
-      });
+      this._rescueService.addAnimal(petModel);
+      this._router.navigate([`/${data.type}s`]);
     }else{
       if(this.pet){
         if(data.main_image === "") data.main_image = this.pet.main_image;
@@ -119,9 +118,8 @@ export class AddPetComponent implements OnInit{
           data.carousel_imgs = data.carousel_imgs.split("|egor_espai|");
           data.carousel_imgs.splice(0, 1);
         }
-        this._rescueService.mofifyById(this.id, data).then(() => {
-          this._router.navigate([`/${data.type}s`]);
-        });
+        this._rescueService.mofifyById(this.id, data);
+        this._router.navigate([`/${data.type}s`]);
       }
     }
    

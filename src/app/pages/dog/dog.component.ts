@@ -35,9 +35,8 @@ export class DogComponent {
   }
 
   delete (index : number , id : string) {
-    this._resuceService.delteById(id).then(() => {
-      this.pets.splice(index, 1);
-    });
+    this._resuceService.delteById(id);
+    this.pets.splice(index, 1);
   }
 
   getPets () {

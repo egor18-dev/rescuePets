@@ -4,6 +4,8 @@ import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { PetModel } from '../models/pet.model';
 import { Firestore, collectionData, Query, query, where, CollectionReference, collection, doc, deleteDoc } from '@angular/fire/firestore';
 import { addDoc, DocumentReference, limit, updateDoc } from 'firebase/firestore';
+import { AuthSessionService } from './AuthSessionService/auth-session-service.service';
+import { UserModel } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +19,8 @@ export class RescueService {
   main : any;
 
   constructor(private _httpClient: HttpClient,
-    private _firestore: Firestore) {
+    private _firestore: Firestore,
+    private _authService : AuthSessionService) {
     this._petsCollection = collection(this._firestore, 'pets') as CollectionReference<PetModel>;
     this._mainCollection = collection(this._firestore, 'main') as CollectionReference<any>;
 
@@ -33,7 +36,14 @@ export class RescueService {
   }
 
   addAnimal(pet: PetModel) {
-    return addDoc(this._petsCollection, pet);
+    this._authService.userLogged().then((uid : any) => {
+      
+      this._authService.getUserByUid(uid).then((user : UserModel) => {
+        if(user.role === 'admin'){
+          addDoc(this._petsCollection, pet);
+        }
+      });
+    });
   }
 
   getPets() {
@@ -70,15 +80,34 @@ export class RescueService {
   }
 
   delteById(id: string) {
-    const documentRef: DocumentReference<PetModel> = doc(this._firestore, 'pets', id) as DocumentReference<PetModel>;
-    return deleteDoc(documentRef);
+    this._authService.userLogged().then((uid : any) => {
+
+      this._authService.getUserByUid(uid).then((user : UserModel) => {
+
+        if(user.role === "admin"){
+          const documentRef: DocumentReference<PetModel> = doc(this._firestore, 'pets', id) as DocumentReference<PetModel>;
+          deleteDoc(documentRef);
+        }
+
+      });
+
+    });
+
+    
   }
 
   mofifyById(id: string, pet: any) {
-    console.log(pet);
 
-    const documentRef: DocumentReference<PetModel> = doc(this._firestore, 'pets', id) as DocumentReference<PetModel>;
-    return updateDoc(documentRef, pet);
+    this._authService.userLogged().then((uid : any) => {
+
+      this._authService.getUserByUid(uid).then((user : UserModel) => {
+        const documentRef: DocumentReference<PetModel> = doc(this._firestore, 'pets', id) as DocumentReference<PetModel>;
+        updateDoc(documentRef, pet);
+      });
+
+    });
+
+    
   }
 
 }
