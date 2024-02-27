@@ -8,6 +8,7 @@ import { Firestore, collectionData } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import {
   GoogleAuthProvider,
+  sendEmailVerification,
   signInWithEmailAndPassword,
   User,
   UserCredential,
@@ -105,8 +106,17 @@ export class AuthSessionService {
       );
 
       if (result) {
+        if(this._auth.currentUser?.emailVerified){
+          this.checkUserAdmin();
+        }else{
+          sendEmailVerification(result.user);
+          this._auth.signOut().then(() => {
+            alert("Usuari no verificat, hem tornat a enviar un gmail de verificacio");
+            this._router.navigate(['/signIn']);
+          });
+        }
+        
         this._router.navigate(['/home']);
-        this.checkUserAdmin();
       } else {
         this._router.navigate(['/signIn']);
       }
@@ -171,7 +181,11 @@ export class AuthSessionService {
         password
       );
       if (result) {
-        this.registerInfo(name, surnames, email);
+        this._auth.signOut().then(() => {
+          this._router.navigate(['/signIn']);
+          sendEmailVerification(result.user);
+          this.registerInfo(name, surnames, email);
+        });
       } else {
         alert('Error al crear el compte intente un altre correu');
       }
@@ -200,4 +214,9 @@ export class AuthSessionService {
         });
     }
   }
+
+  isUserVerified () {
+    return this._auth.currentUser?.emailVerified;
+  }
+
 }
