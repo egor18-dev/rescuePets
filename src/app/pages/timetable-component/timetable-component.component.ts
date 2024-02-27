@@ -44,21 +44,8 @@ export class TimetableComponentComponent {
       const date = new Date();
       date.setHours(this.hours[index], 0, 0);
       date.setDate(date.getDate() + this.add);
-      console.log(date);
 
-      this._auth.userLogged().then((uid : any) => {
-
-        if(uid){
-          const volunteer : Volunteer = {
-            refPet: this.id,
-            refUser: uid,
-            time: date
-          }
-
-          this._volunteersService.addVolunteer(volunteer);
-        }
-
-      });
+      this._volunteersService.addVolunteer(this.id, date);
     }
 
     retrieveByHour (i : number){

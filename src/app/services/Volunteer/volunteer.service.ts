@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Firestore, collectionData, Query, query, where, CollectionReference, collection, doc, deleteDoc } from '@angular/fire/firestore';
 import { addDoc, DocumentReference, limit, updateDoc } from 'firebase/firestore';
 import { Volunteer } from 'src/app/models/volunteer';
+import { AuthSessionService } from '../AuthSessionService/auth-session-service.service';
+import { UserModel } from 'src/app/models/user.model';
 
 
 @Injectable({
@@ -13,14 +15,35 @@ export class VolunteerService {
 
   private volunteers: Volunteer[] = [];
 
-  constructor(private _firestore: Firestore) {
+  constructor(private _firestore: Firestore,
+    private _authService : AuthSessionService) {
     this._volunteersCollection = collection(this._firestore, 'volunteers') as CollectionReference<Volunteer>;
 
     this.getVolunteers(1);
   }
 
-  addVolunteer(volunteer: Volunteer) {
-    return addDoc(this._volunteersCollection, volunteer);
+  addVolunteer(id : any, date : any) {
+
+    this._authService.userLogged().then((uid : any) => {
+
+      this._authService.getUserByUid(uid).then((user : UserModel) => {
+
+        if(user.role === 'volunteer' || user.role === 'admin'){
+
+          const volunteer : Volunteer = {
+            refPet: id,
+            refUser: uid,
+            time: date
+          }
+
+          addDoc(this._volunteersCollection, volunteer);
+        }
+
+      });
+
+      
+
+    });
   }
 
   getVolunteers(add : number) {
